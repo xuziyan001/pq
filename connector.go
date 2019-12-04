@@ -75,6 +75,12 @@ func NewConnector(dsn string) (*Connector, error) {
 		}
 	}
 
+	// for pgbouncer use
+	if _, ok := o["pgbouncer"]; ok {
+		delete(o, "extra_float_digits")
+		delete(o, "pgbouncer")
+	}
+
 	// We can't work with any client_encoding other than UTF-8 currently.
 	// However, we have historically allowed the user to set it to UTF-8
 	// explicitly, and there's no reason to break such programs, so allow that.
